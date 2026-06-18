@@ -1,6 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using water_shop.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectingString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectingString));
 
 
 builder.Services.AddControllers();

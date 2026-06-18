@@ -27,7 +27,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="Entity\" />
     <Folder Include="DTO\" />
-    <Folder Include="Data\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
