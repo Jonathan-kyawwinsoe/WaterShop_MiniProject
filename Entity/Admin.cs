@@ -2,5 +2,10 @@
 {
     public class Admin
     {
+        public int Id { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public string PasswordHash { get; set; } = string.Empty;
+        public DateTime CreadedAt { get; set; } = DateTime.Now;
+        public DateTime LastLoginAt { get; set; } = DateTime.Now;
     }
 }
