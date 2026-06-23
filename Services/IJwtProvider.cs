@@ -2,6 +2,7 @@
 {
     public interface IJwtProvider
     {
-        string GenerateToken(string adminId, string userName);
+        string GenerateAccessToken(string adminId, string userName);
+        string GenerateRefreshToken();
     }
 }

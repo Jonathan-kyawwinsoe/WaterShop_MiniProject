@@ -2,7 +2,9 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
+using water_shop.Entity;
 
 namespace water_shop.Services
 {
@@ -17,7 +19,7 @@ namespace water_shop.Services
         {
             _jwtOption = jwtOption.Value;
         }
-        public string GenerateToken(string adminId, string userName)
+        public string GenerateAccessToken(string adminId, string userName)
         {
             var claims = new[]
             {
@@ -36,6 +38,19 @@ namespace water_shop.Services
                 signingCredentials: creds
             );
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        public string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            return Convert.ToBase64String(randomNumber);
+        }
+
+        internal string GenerateAccessToken(Admin admin)
+        {
+            throw new NotImplementedException();
         }
     }
     

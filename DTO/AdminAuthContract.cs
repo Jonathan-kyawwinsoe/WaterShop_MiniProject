@@ -19,13 +19,7 @@ namespace water_shop.DTO
         string AccessToken,
         [property: Description("Refresh token used to get a new access token or logout")]
         [property: DefaultValue("7a8b9c...")]
-        string RefreshToken,
-        [property:Description("The username of the authenication administrator")]
-        [property:DefaultValue("Admin")]
-        string UserName,
-        [property: Description("The expiration date and time of the token")]
-        [property: DefaultValue("2026-06-20T18:00:00Z")]
-        DateTime ExpiresAt
+        string RefreshToken
     );
     public sealed record AdminLogoutRequest(
         [param: Required, MinLength(10)]
