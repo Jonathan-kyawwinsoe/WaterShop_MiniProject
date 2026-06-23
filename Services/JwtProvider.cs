@@ -11,23 +11,19 @@ namespace water_shop.Services
     public class JwtProvider: IJwtProvider
     {
         private readonly JwtOption _jwtOption;
-        public JwtProvider(JwtOption jwtOption)
+        public JwtProvider(IOptions<JwtOption> jwtOptionOption)
         {
-            _jwtOption = jwtOption;
+            _jwtOption = jwtOptionOption.Value;
         }
-        public JwtProvider(IOptions<JwtOption> jwtOption)
-        {
-            _jwtOption = jwtOption.Value;
-        }
-        public string GenerateAccessToken(string adminId, string userName)
+        public string GenerateAccessToken(string Admin, string userName)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, adminId.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, userName.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, Admin),
+                new Claim(JwtRegisteredClaimNames.UniqueName, userName),
                 new Claim(ClaimTypes.Name, userName.ToString())
             };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOption.SecretKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOption.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
@@ -46,11 +42,6 @@ namespace water_shop.Services
             rng.GetBytes(randomNumber);
 
             return Convert.ToBase64String(randomNumber);
-        }
-
-        internal string GenerateAccessToken(Admin admin)
-        {
-            throw new NotImplementedException();
         }
     }
     

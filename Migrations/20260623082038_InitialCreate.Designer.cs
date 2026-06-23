@@ -12,7 +12,7 @@ using water_shop.Data;
 namespace water_shop.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260619104636_InitialCreate")]
+    [Migration("20260623082038_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,15 +33,21 @@ namespace water_shop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreadedAt")
+                    b.Property<DateTime?>("CreadeddAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastLoginAt")
+                    b.Property<DateTime?>("LastLoginAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiry")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
                         .IsRequired()

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using water_shop.Data;
@@ -23,6 +24,7 @@ namespace water_shop.Controllers
             _jwtProvider = jwtProvider;
         }
         [HttpPost("Login")]
+        [AllowAnonymous]
         [EndpointSummary("Admin Login")]
         [EndpointDescription("Admin login use user name and Password")]
         [Consumes("application/json")]
@@ -48,7 +50,7 @@ namespace water_shop.Controllers
             var userNameLower = userName.ToLowerInvariant();
 
             var admin = await db.Admins.FirstOrDefaultAsync(a =>
-            a.UserName != null && a.UserName.ToLowerInvariant() == userNameLower);
+            a.UserName == userNameLower);
 
             if(admin is null || !hasher.VerifyPassword(admin.PasswordHash, request.Password))
             {
@@ -57,7 +59,8 @@ namespace water_shop.Controllers
                 detail: "Invalid UserName or password.",
                 statusCode: StatusCodes.Status401Unauthorized);
             }
-            string accessToken = jwt.GenerateAccessToken(admin);
+            Entity.Admin admin1 = admin;
+            string accessToken = jwt.GenerateAccessToken(admin.UserName,"Admin");
             string refreshToken = jwt.GenerateRefreshToken();
 
             admin.RefreshToken = refreshToken;
@@ -68,6 +71,50 @@ namespace water_shop.Controllers
             var resopnse = new AdminLoginResponse(accessToken, refreshToken);
 
             return Ok(resopnse);
+        }
+        [HttpPost("Refresh")]
+        [AllowAnonymous]
+        [EndpointSummary("Refresh Token")]
+        [EndpointDescription("Validate refresh token and return new tokens.")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(AdminLoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<AdminLoginResponse>> RefreshToken(
+            [FromBody] AdminLoginRequest request,
+            [FromServices] AppDbContext db,
+            [FromServices] JwtProvider jwt)
+        {
+            if (string.IsNullOrWhiteSpace(request.RefreshToken))
+            {
+                return Problem(
+                    title: "Bad Request",
+                    detail: "Refresh Token is required.",
+                    statusCode: StatusCodes.Status400BadRequest
+                );
+            }
+            var admin = await db.Admins.FirstOrDefaultAsync(a =>
+             a.RefreshToken == request.RefreshToken);
+
+            if (admin == null || admin.RefreshTokenExpiry <= DateTime.UtcNow)
+            {
+                return Problem(
+                    title: "Unauthorized",
+                    detail: "Invalid or expired refresh token.",
+                    statusCode: StatusCodes.Status401Unauthorized
+                );
+            }
+            string newAccessToken = jwt.GenerateAccessToken(admin.Id.ToString(), admin.UserName);
+            string newRefreshToken = jwt.GenerateRefreshToken();
+
+            admin.RefreshToken = newRefreshToken;
+            admin.RefreshTokenExpiry = DateTime.UtcNow.AddDays(7);
+
+            await db.SaveChangesAsync();
+
+            var response = new AdminLoginResponse(newAccessToken, newRefreshToken);
+            return Ok(response);
         }
     }
 }

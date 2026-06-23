@@ -13,6 +13,19 @@ namespace water_shop.DTO
         [param:DefaultValue("P@ssword")]
         string Password
     );
+    public sealed record AdminTokenRequest(
+        [property: Description("Refresh token used to get a new access token or logout")]
+        [property: DefaultValue("7a8b9c...")]
+        string RefreshToken
+        );
+    public sealed record AdminTokenResponse(
+        [property:Description("JSON Web Token (JWT) used to authorize future requests")]
+        [property:DefaultValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")]
+        string AccessToken,
+        [property: Description("Refresh token used to get a new access token or logout")]
+        [property: DefaultValue("7a8b9c...")]
+        string RefreshToken
+        );
     public sealed record AdminLoginResponse(
         [property:Description("JSON Web Token (JWT) used to authorize future requests")]
         [property:DefaultValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")]

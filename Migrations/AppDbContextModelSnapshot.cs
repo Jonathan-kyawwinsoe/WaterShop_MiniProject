@@ -30,7 +30,7 @@ namespace water_shop.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CreadeddAt")
+                    b.Property<DateTime?>("CreadeddAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("LastLoginAt")

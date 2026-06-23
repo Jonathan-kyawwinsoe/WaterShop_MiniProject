@@ -40,10 +40,12 @@ builder.Services.AddOpenApi(option =>
 var connectingString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectingString));
+
 builder.Services.Configure<JwtOption>(builder.Configuration.GetSection("Jwt"));
 builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+builder.Services.AddScoped<PasswordHasher>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
-
+builder.Services.AddScoped<JwtProvider>();
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
