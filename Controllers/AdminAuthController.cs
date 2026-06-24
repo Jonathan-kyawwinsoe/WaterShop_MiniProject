@@ -148,7 +148,8 @@ namespace water_shop.Controllers
                     statusCode: StatusCodes.Status401Unauthorized
                 );
             }
-            var admin = await db.Admins.FindAsync(Guid.Parse(adminIdClaim));
+            int adminId = int.Parse(adminIdClaim);
+            var admin = await db.Admins.FindAsync(adminId);
             if(admin is null)
             {
                 return Problem(
