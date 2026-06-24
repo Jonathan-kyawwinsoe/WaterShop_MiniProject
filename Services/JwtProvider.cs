@@ -21,7 +21,7 @@ namespace water_shop.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, Admin),
                 new Claim(JwtRegisteredClaimNames.UniqueName, userName),
-                new Claim(ClaimTypes.Name, userName.ToString())
+                new Claim(ClaimTypes.Name, userName)
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOption.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
