@@ -26,7 +26,7 @@ namespace water_shop.Controllers
         [HttpPost("Login")]
         [AllowAnonymous]
         [EndpointSummary("Admin Login")]
-        [EndpointDescription("Admin login use user name and Password")]
+        [EndpointDescription("Admin login  user name and Password")]
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AdminLoginResponse),StatusCodes.Status200OK)]
