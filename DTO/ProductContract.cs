@@ -15,7 +15,6 @@ namespace water_shop.DTO
 
         [param: Required]
         [param: Description("The price per unit")]
-        [param: DefaultValue(1500)]
         decimal UnitsPrice,
 
         [param: Required]
@@ -25,7 +24,7 @@ namespace water_shop.DTO
 
         [param: Required]
         [param: Description("Is the product returnable")]
-        [param: DefaultValue("TRUE")]
+        [param: DefaultValue(true)]
         bool IsReturnAble
     );
 
@@ -39,13 +38,12 @@ namespace water_shop.DTO
         [property: DefaultValue(1)]
         int? CategoryId,
 
-        [property: DefaultValue(1500)]
         decimal UnitsPrice,
 
         [property: DefaultValue(100)]
         int StockQuantity,
 
-        [property: DefaultValue("true")]
+        [property: DefaultValue(true)]
         bool IsReturnAble,
 
         DateTime CreatedAt
@@ -60,11 +58,12 @@ namespace water_shop.DTO
         int? CategoryId,
         [property: DefaultValue("Water")]
         string? CategoryName,
-        [property: DefaultValue(1500)]
+
         decimal UnitsPrice,
+
         [property: DefaultValue(100)]
         int SockQuantity,
-        [property: DefaultValue("true")]
+        [property: DefaultValue(true)]
         bool IsReturnAble,
         DateTime CreatedAt,
         DateTime UpdatedAt
@@ -82,7 +81,6 @@ namespace water_shop.DTO
 
         [param: Required]
         [param: Description("The price per unit")]
-        [param: DefaultValue(1500)]
         decimal UnitsPrice,
 
         [param: Required]
@@ -92,7 +90,7 @@ namespace water_shop.DTO
 
         [param: Required]
         [param: Description("Is the product returnable")]
-        [param: DefaultValue("true")]
+        [param: DefaultValue(true)]
         bool IsReturnAble
     );
 
@@ -103,11 +101,12 @@ namespace water_shop.DTO
         string ProductName,
         [property: DefaultValue(1)]
         int? CategoryId,
-        [property: DefaultValue(1500)]
+
         decimal UnitsPrice,
+
         [property: DefaultValue(100)]
         int SockQuantity,
-        [property: DefaultValue("true")]
+        [property: DefaultValue(true)]
         bool IsReturnAble,
         DateTime UpdatedAt
     );
