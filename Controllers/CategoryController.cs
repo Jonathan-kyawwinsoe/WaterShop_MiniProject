@@ -151,7 +151,7 @@ namespace water_shop.Controllers
             return Ok(new DeleteCategoryResponse(
                 Message: "Category delete successfully"
                 ));
-    }
+        }
 
     }
 }

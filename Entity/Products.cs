@@ -8,8 +8,8 @@ namespace water_shop.Entity
         public string ProductName { get; set; } = string.Empty;
         public int? CategoryId { get; set; } 
         public decimal UnitsPrice { get; set; }
-        public int SockQuantity { get; set; }
-        public string IsReturnAble { get; set; } = string.Empty;
+        public int StockQuantity { get; set; }
+        public bool IsReturnAble { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
