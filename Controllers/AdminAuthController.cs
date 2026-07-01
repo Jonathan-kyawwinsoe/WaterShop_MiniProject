@@ -38,7 +38,7 @@ namespace water_shop.Controllers
             [FromServices] PasswordHasher hasher,
             [FromServices] JwtProvider jwt)
         {
-            if(string.IsNullOrWhiteSpace(request.UserName)|| string.IsNullOrWhiteSpace(request.Password))
+            if (string.IsNullOrWhiteSpace(request.UserName) || string.IsNullOrWhiteSpace(request.Password))
             {
                 return Problem(
                     title: "Invalid creadentials",
@@ -131,7 +131,7 @@ namespace water_shop.Controllers
             [FromServices] AppDbContext db,
             [FromServices] PasswordHasher hasher)
         {
-            if(request.NewPassword != request.ConfirmPassword)
+            if (request.NewPassword != request.ConfirmPassword)
             {
                 return Problem(
                     title: "Validation Error",
@@ -140,7 +140,7 @@ namespace water_shop.Controllers
                 );
             }
             var adminIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(adminIdClaim is null)
+            if (adminIdClaim is null)
             {
                 return Problem(
 

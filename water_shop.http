@@ -1,6 +1,6 @@
 @water_shop_HostAddress = http://localhost:5125
 
-GET {{water_shop_HostAddress}}/weatherforecast/
+GET {{water_shop_HostAddress}}/AdminAuth/
 Accept: application/json
 
 ###
